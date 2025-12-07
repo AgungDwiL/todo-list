@@ -31,7 +31,7 @@
         <th><input type="text" name="search" id="searc"></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="todoListBody">
       <tr>
         <td><input type="button" value="Done"></td>
         <td>Todo Description</td>
@@ -42,7 +42,39 @@
   <script>
 
     const todoList = [];
+    
+    function clearTodoList(){
+      const todoListBody = document.getElementById("todoListBody");
+      while(todoListBody.firstChild){
+        todoListBody.removeChild(todoListBody.firstChild);
+      }
+    }
 
+    function displayTodoList(){
+      clearTodoList();
+
+      for (let i = 0; i < todoList.length; i++) {
+        const todo = todoList[i];
+        
+        const tr = document.createElement("tr");
+        const tdButton = document.createElement("td");
+        tr.appendChild(tdButton);
+
+        const tdTodo = document.createElement("td");
+        tdTodo.textContent = todo;
+        tr.appendChild(tdTodo);
+
+        const buttonDone = document.createElement("input");
+        buttonDone.type = "button";
+        buttonDone.value = "Done";
+        tdButton.appendChild(buttonDone);
+
+        const todoListBody = document.getElementById("todoListBody");
+        todoListBody.appendChild(tr);
+      }
+    }
+
+    // menangkap data todoList
     document.forms['todoForm'].onsubmit = function (event){
       event.preventDefault();
 
@@ -52,6 +84,7 @@
       document.forms['todoForm'].reset();
 
       console.info(todoList);
+      displayTodoList();
     }
 
   </script>
